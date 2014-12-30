@@ -20,6 +20,7 @@ namespace Preferences
   
   double AsNumber(const char *name, double defaultNumber);
   unsigned int AsHex(const char *name, unsigned int defaultHex);
+  bool AsBool(const char *name, bool defaultBool);
   
   // Settings
   
@@ -27,4 +28,7 @@ namespace Preferences
   inline unsigned int RenderClearColor() { return AsHex("RenderClearColor", 0xFF000000); }
   inline float Volume() { return AsNumber("Volume", 0.5); }
   inline int Ticks() { return AsNumber("Ticks", 8); }
+  inline bool Resizable() { return AsBool("Resizable", true); }
+  inline int Width() { return AsNumber("Width", 960); }
+  inline int Height() { return AsNumber("Height", 480); }
 }

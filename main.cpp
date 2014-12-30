@@ -142,7 +142,7 @@ int main(int argc, char **argv)
   // Init SDL
   
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-  UI::Screen screen{"CHIP-8 Emulator", 960, 480,
+  UI::Screen screen{"CHIP-8 Emulator", Preferences::Width(), Preferences::Height(),
     C8::Emulator::VideoWidth, C8::Emulator::VideoHeight};
   
   C8::Emulator emu;

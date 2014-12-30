@@ -8,6 +8,8 @@
 
 #include "Screen.hpp"
 
+#include "Preferences.hpp"
+
 namespace UI
 {
   Screen::Screen(const std::string &title, int width, int height,
@@ -17,7 +19,7 @@ namespace UI
     mSuccess = false;
     
     mWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                               width, height, 0);
+                               width, height, Preferences::Resizable() ? SDL_WINDOW_RESIZABLE : 0);
     if(!mWindow) return;
     
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);

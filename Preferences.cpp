@@ -83,4 +83,12 @@ namespace Preferences
     if(iter == doc.MemberEnd()) return defaultNumber;
     return iter->value.GetDouble();
   }
+  
+  bool AsBool(const char *name, bool defaultBool)
+  {
+    if(!doc.IsObject()) return defaultBool;
+    auto iter = doc.FindMember(name);
+    if(iter == doc.MemberEnd()) return defaultBool;
+    return iter->value.GetBool();
+  }
 }

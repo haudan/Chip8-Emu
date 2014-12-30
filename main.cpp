@@ -46,11 +46,27 @@ void LogEmu(C8::Emulator &emu)
   std::puts("\n");
 }
 
-uint8_t KeyCode(int key)
+/*uint8_t KeyCode(int key)
 {
   return (key >= SDLK_0 && key <= SDLK_9) ? key - SDLK_0
   : (key >= SDLK_a && key <= SDLK_f) ? key - SDLK_a + 10
   : 0xFF;
+}*/
+
+// This version expects the passed key to actually be the scancode.
+uint8_t KeyCode(int key)
+{
+#define kc(c) SDL_SCANCODE_##c
+#define is(c) (key == kc(c))
+  
+  return (key >= kc(1) && key <= kc(3)) ? key - kc(1) + 1 : is(4) ? 0xC
+  : is(Q) ? 0x4 : is(W) ? 0x5 : is(E) ? 0x6 : is(R) ? 0xD
+  : is(A) ? 0x7 : is(S) ? 0x8 : is(D) ? 0x9 : is(F) ? 0xE
+  : is(Z) ? 0xA : is(X) ? 0x0 : is(C) ? 0xB : is(V) ? 0xF
+  : 0xFF;
+  
+#undef is
+#undef kc
 }
 
 void AudioCallback(void *userData, Uint8 *data, int len)
@@ -76,6 +92,8 @@ void AudioCallback(void *userData, Uint8 *data, int len)
       float val = std::sin(rot);
       rot += Freq * Delta;
       rot += (Pi / 256) * RandReal<float>(-1.0f, 1.0f);
+      // Yes this is all done on purpose.
+      
       if(rot > 2 * Pi) rot -= 2 * Pi;
       
       stream[i] = val * Volume * MaxVolume;
@@ -184,7 +202,7 @@ int main(int argc, char **argv)
           break;
         }
         
-        uint8_t key = KeyCode(event.key.keysym.sym);
+        uint8_t key = KeyCode(event.key.keysym.scancode); // Changed to scancode
         
         if(key != 0xFF)
         {

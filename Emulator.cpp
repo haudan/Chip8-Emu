@@ -41,9 +41,6 @@ namespace C8
   {
     // Write font data
     memcpy(mMemory.get(), fontData, sizeof(fontData));
-    
-    // Init
-    mStartTime = mLastSpecialUpdateTime = TimeNow();
   }
   
   void Emulator::UpdateSpecials()
@@ -152,7 +149,7 @@ namespace C8
   
   bool Emulator::GetPixel(int x, int y)
   {
-    if(x > 0 && x < VideoWidth && y > 0 && y < VideoHeight)
+    if(x >= 0 && x < VideoWidth && y >= 0 && y < VideoHeight)
       return mVideoMem[VideoWidth * y + x];
     return false;
   }
@@ -181,7 +178,7 @@ namespace C8
     memset(mStack, 0, 2 * StackSize);
     
     // Clear video memory
-    memset(mVideoMem, 0, VideoWidth * VideoHeight);
+    ClearScreen();
     
     // Registers
     memset(mRegV, 0, 16);

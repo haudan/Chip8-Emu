@@ -36,6 +36,12 @@ Written in C++11 (possibly some C++14), feel free to join development!
       A S D F          7 8 9 E
       Z X C V          A 0 B F
 
+
+    Special keys:
+
+    [Esc] - Quit
+    [Return] - Hard reset
+
 ## Dependencies (for compiling)
 
 [SDL2](http://libsdl.org)

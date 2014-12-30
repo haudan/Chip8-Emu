@@ -226,7 +226,7 @@ int main(int argc, char **argv)
       }
     }
     
-    static const int Ticks = Clamp(Preferences::Ticks(), 1, 1000000);
+    static const int Ticks = Clamp(Preferences::Ticks(), 1, 999999);
     
     for(int i = 0; i < Ticks; ++i)
     {

@@ -11,6 +11,8 @@
 #include <string>
 #include <SDL2/SDL.h>
 
+#include "Preferences.hpp"
+
 namespace UI
 {
   class Screen final
@@ -23,6 +25,9 @@ namespace UI
     int mTexWidth, mTexHeight;
     
     bool mSuccess = false;
+    
+    unsigned int mDrawColor = Preferences::RenderDrawColor();
+    unsigned int mClearColor = Preferences::RenderClearColor();
   public:
     // Getters & setters
     bool Success() const { return mSuccess; }

@@ -16,6 +16,7 @@
 #include "Emulator.hpp"
 #include "Screen.hpp"
 #include "Random.hpp"
+#include "Preferences.hpp"
 
 void Sleep(int ms)
 {
@@ -69,6 +70,9 @@ uint8_t KeyCode(int key)
 #undef kc
 }
 
+template <typename T>
+T Clamp(T val, T min, T max) { return (val < min) ? min : (val > max) ? max : val; }
+
 void AudioCallback(void *userData, Uint8 *data, int len)
 {
   float *stream = (float*)data;
@@ -77,12 +81,12 @@ void AudioCallback(void *userData, Uint8 *data, int len)
   
   const bool playSound = emu->ShouldPlaySound();
   
-  constexpr float MaxVolume = 0.25f;
-  constexpr float Volume = 1.0f;
+  constexpr float MaxVolume = 0.25f; // Do not mess with this, or kiss your ears goodbye.
   constexpr float Delta = 1.0f / (44100.0f / 4096.0f);
   constexpr float Pi = 3.14159265359f;
   constexpr float Freq = Pi / 4;
   
+  static const float Volume = Clamp(Preferences::Volume(), 0.0f, 1.0f);
   static float rot = 0;
   
   for(size_t i = 0; i < length; ++i)
@@ -129,6 +133,11 @@ int main(int argc, char **argv)
   fclose(fp);
   
   bool programRunning = true;
+  
+  // Preferences
+  
+  if(!Preferences::Load(".chip8_pref"))
+    std::puts("Loading preferences failed!");
   
   // Init SDL
   
@@ -217,7 +226,9 @@ int main(int argc, char **argv)
       }
     }
     
-    for(int i = 0; i < 6; ++i)
+    static const int Ticks = Clamp(Preferences::Ticks(), 1, 1000000);
+    
+    for(int i = 0; i < Ticks; ++i)
     {
       //LogEmu(emu);
       if(!emu.Tick()) break;

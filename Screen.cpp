@@ -43,7 +43,7 @@ namespace UI
     
     for(int i = 0; i < mTexWidth * mTexHeight; ++i)
     {
-      pixels[i] = vram[i] ? 0xFFFFFFFF : 0xFF000000;
+      pixels[i] = vram[i] ? mDrawColor : mClearColor;
     }
     
     SDL_UpdateTexture(mTexture, nullptr, pixels, 4 * mTexWidth);

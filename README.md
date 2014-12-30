@@ -64,7 +64,7 @@ Here is a sample .chip8_pref file, listing all existing settings:
   "Resizable": true,              // Is the window resizable?
   "Width": 960,                   // The window width.
   "Height": 480,                  // The window height.
-  "Ticks": 8                      // How many Chip-8 processor ticks per frame (0 - 999999).
+  "Ticks": 8                      // How many Chip-8 processor ticks per frame (1 - 999999).
 }
 ```
 All these settings listed are optional, the emulator has hard-coded defaults.
